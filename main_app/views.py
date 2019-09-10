@@ -1,17 +1,6 @@
 from django.shortcuts import render
+from .models import Game
 
-class Game:  # Note that parens are optional if not inheriting from another class
-  def __init__(self, title, platform, description, relyear):
-    self.title = title
-    self.platform = platform
-    self.description = description
-    self.relyear = relyear
-
-games = [
-  Game('Fallout: New Vegas', 'PC', 'Fantastic', 2010),
-  Game('Deus Ex: Human Revolution', 'PC', 'Fantastic', 2011),
-  Game('Witcher 3: Wild Hunt', 'PC', 'Great', 2015)
-]
 
 
 def home(request):
@@ -21,6 +10,13 @@ def about(request):
     return render(request, 'about.html')
 
 def games_index(request):
+    games = Game.objects.all()
     return render(request, 'games/index.html', {'games': games})
+
+def games_detail(request, game_id):
+    game = Game.objects.get(id=game_id)
+    return render(request, 'games/detail.html', {'game': game})
+
+
 
 

@@ -12,3 +12,9 @@ class Game(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'game_id': self.id})
+
+class Expansion(models.Model):
+    extitle = models.CharField(max_length=100)
+    rely = models.IntegerField()
+
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)

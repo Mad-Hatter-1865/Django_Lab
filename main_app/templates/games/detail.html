@@ -3,23 +3,46 @@
 
 <h1>Game Details</h1>
 
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ game.title }}</span>
-    <p>Platform: {{ game.platform }}</p>
-    <p>Description: {{ game.description }}</p>
-    {% if game.relyear > 0 %}
-      <p>Release Year: {{ game.relyear }}</p>
-    {% else %}
-      <p>Release Year: 2000's</p>
-    {% endif %}
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ game.title }}</span>
+        <p>Platform: {{ game.platform }}</p>
+        <p>Description: {{ game.description }}</p>
+        {% if game.relyear > 0 %}
+          <p>Release Year: {{ game.relyear }}</p>
+        {% else %}
+          <p>Release Year: 2000's</p>
+        {% endif %}
+      </div>
+      <div class="card-action">
+        <a href="{% url 'games_update' game.id %}">Edit</a>
+        <a href="{% url 'games_delete' game.id %}">Delete</a>
+      </div>
+    </div>
   </div>
+  <div class="col s6">
 
-  <div class="card-action">
-    <a href="{% url 'games_update' game.id %}">Edit</a>
-    <a href="{% url 'games_delete' game.id %}">Delete</a>
+    <form action= "{% url 'add_expansion' game.id %}" method="post">
+      {% csrf_token %}
+      {{ expansion_form.as_p }}
+      <input type="submit" class="btn" value="Add Expansion">
+    </form>
+
+    <table class="striped">
+      <thead>
+        <tr><th>Expansion Packs</th><th>Release Year</th></tr>
+      </thead>
+      <tbody>
+        {% for expansion in game.expansion_set.all %}
+          <tr>
+            <td>{{expansion.extitle}}</td>
+            <td>{{expansion.rely}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-
 </div>
-
 {% endblock %}

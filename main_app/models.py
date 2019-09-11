@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
+
 class Player(models.Model):
     name = models.CharField(max_length=50)
     platform = models.CharField(max_length=50)
@@ -29,3 +30,11 @@ class Expansion(models.Model):
     rely = models.IntegerField()
 
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+
+
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for game_id: {self.game_id} @{self.url}"

@@ -45,4 +45,47 @@
     </table>
   </div>
 </div>
+
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>Players that have played {{ game.title }}</h3>
+    {% if game.players.count %}
+      {% for player in game.players.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+               {{ player.name }}
+            </span>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>No Players Yet :(</h5>
+    {% endif %}
+  </div>
+
+  <div class="col s6">
+    <h3>Available Players</h3>
+    {% if players.count %}
+      {% for player in players.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+               {{ player.name }}
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'assoc_player' game.id player.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{game.title}} Already Has All Players Available</h5>
+    {% endif %}
+  </div>
+
 {% endblock %}

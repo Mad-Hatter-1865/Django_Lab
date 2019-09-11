@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Player List</h1>
+
+{% for player in player_list %}
+  <a href="{% url 'players_detail' player.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ player.name }}</span>
+            <p>Platfrom: {{ player.platform }}</p>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}
